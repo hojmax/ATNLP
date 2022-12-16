@@ -61,14 +61,6 @@ class Dataloader:
         self._update_input_max_length(x)
         return x, y
 
-    def transform_string(self, string):
-        x, _ = self._get_tensors(
-            self.input_lang,
-            self.output_lang,
-            [[string, "I_JUMP"]]
-        )
-        return x[0]
-
     def decode_string(self, outs):
         return " ".join([
             self.output_lang.index2word[i.item()] for i in outs
@@ -86,8 +78,8 @@ class Dataloader:
 
     def load(self, path):
         """A basic loading function for the dataloader"""
-        self.input_lang = Lang("input")
-        self.output_lang = Lang("output")
+        self.input_lang = Lang()
+        self.output_lang = Lang()
         self.input_lang.load(os.path.join(path, 'input_lang.pkl'))
         self.output_lang.load(os.path.join(path, 'output_lang.pkl'))
 
@@ -107,12 +99,12 @@ class Dataloader:
         """
         pairs = []
         seperator_token = ' OUT: '
-        trailing_token = 'IN: '
+        initial_token = 'IN: '
         lines = open(path, 'r').readlines()
         for line in lines:
             pairs.append(
                 line.strip()
-                    .replace(trailing_token, '')
+                    .replace(initial_token, '')
                     .split(seperator_token)
             )
         return pairs
@@ -138,8 +130,8 @@ class Dataloader:
         Returns:
             _type_: _description_
         """
-        input_lang = Lang("input")
-        output_lang = Lang("output")
+        input_lang = Lang()
+        output_lang = Lang()
         for pair in pairs:
             input_lang.add_sentence(pair[0])
             output_lang.add_sentence(pair[1])
@@ -169,6 +161,7 @@ class Dataloader:
             torch.Tensor: A tensor of shape (len(sentence), 1)
         """
         indexes = self._index_from_sentence(lang, sentence)
+        indexes.insert(0, lang.SOS_token)
         indexes.append(lang.EOS_token)
         return torch.tensor(
             indexes,

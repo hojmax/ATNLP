@@ -33,6 +33,6 @@ You will need an API key when connecting. This can be found in your settings.
 
 [SCAN Data](https://github.com/brendenlake/SCAN)
 
-[Pytorch Language Translation Tutorial](https://pytorch.org/tutorials/beginner/transformer_tutorial.html)
+[Pytorch Language Translation Tutorial](https://pytorch.org/tutorials/beginner/translation_transformer.html)
 
 [Pytorch Seq2seq Tutorial](http://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html)
