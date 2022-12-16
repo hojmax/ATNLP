@@ -1,0 +1,145 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+%\usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[os=mac, mackeys=symbols]{menukeys}
+\usepackage{graphicx}
+\graphicspath{{img/}{../img/}{tegninger/}}
+\usepackage{xspace}
+\usepackage[noadjust]{cite}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{cancel}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{kbordermatrix}
+\usepackage{enumerate} % bedre enumeration
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{makecell}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage[all]{xy}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\lstset
+{ %Formatting for code in appendix
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    showstringspaces=false,
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=false,
+}
+\usepackage{mathtools}
+\usepackage{pdfpages}
+% \usepackage[framemethod=TikZ]{mdframed}
+% \mdfdefinestyle{TLO}{
+%     innertopmargin=\baselineskip,
+%     innerbottommargin=\baselineskip,
+%     innerrightmargin=20pt,
+%     innerleftmargin=20pt,}
+\usepackage[parfill]{parskip}  % ingen indent ved ny paragraf
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclareMathOperator{\EX}{\mathbb{E}}
+\DeclareMathOperator{\prob}{P}
+\DeclareMathOperator{\RR}{\mathbb{R}}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+\DeclareMathOperator{\CC}	{\mathbb{C}}
+\DeclareMathOperator{\ZZ}{\mathbb{Z}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\brac}[1]{\left\{#1\right\}}
+\newcommand{\sqrbrac}[1]{\left[#1\right]}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\normlines}[1]{\left\Vert#1\right\Vert}
+\newcommand{\mtx}[1]{\textbf{#1}}
+
+% \usepackage{fancyhdr}
+% \usepackage{lastpage}
+
+% \pagestyle{fancy}
+% \fancyhf{}
+% \lhead{Rasmus Pallisgaard}
+% \rhead{dwp992}
+% \rfoot{Page \thepage\,of \pageref{LastPage}}
+
+\usepackage{subfiles}
+
+\begin{document}
+
+\newpage
+
+\section{So You Want To Understand Attention?}
+
+This small write up is intended to clearly explain how Bahdanau attention (don't cate to cite) is computed for our project. According to Bahdanau, the attention energy is computed by
+$$
+e_{ij}=a(s_{i-1},h_j)=v_a^T\;\tanh{(W_as_{i-1}+U_ah_j)}
+$$
+where $W_a,U_a\in{\RR^{n\times n}}$, $v_a\in\RR^{n}=\RR^{n\times 1}$, $s_{i-1}\in\RR^{n}=\RR^{n\times 1}$. Here $s_{i-1}$ is the decoders previous hidden state and each $h_j$ is the final hidden state layer of input $j$ from the encoder. The yielded $e_{ij}$ is then an integer, and computing this across all $h_j$ yields a vector vector of shape $\mathbf{e}_i\in\RR^l$ where $l$ is the input sequence length.
+
+We then compute 
+$$\alpha_{ij}=\text{softmax}(e_{ij})$$
+meaning we can essentially describe a vector of alphas as $\bar{\alpha}_i=\text{softmax}(\mathbf{e_i})$. Given this we can compute the context vector by
+$$
+\textbf{c}=\bar{\alpha}_i^T\mathbf{H}
+$$
+Where $\mathbf{H}=[h_1,h_2,...,h_l]^T$
+Because $\mathbf{H}\in\RR^{l\times n}$ and $\bar{\alpha}_i^T\in\RR^{1\times l}$, this yields a vector of size $\mathbf{c}\in\RR^{1\times n}$, which is exactly what we want for the context vector.
+
+\section{So How Do They Use The Context Vector?}
+
+According to Bahdanau (minus their appendix on how they specifically implemented the attention), the goal is to model the conditional probability
+$$
+\prob{(y_i\vert y_1,...,y_{i-1},\mathbf{x})}=g(y_{i-1},s_i,c_i)
+$$
+Where $s_i$ again the current decoder hidden output defined by
+$$
+s_i=f(s_{i-1},y_{i-1},c_i)
+$$
+The function $f$ is a recurrent operation, meaning it is an operation that follows from a recurrent modelling step (RNN, LSTM, GRU). $g$ is then any function what so ever.
+
+\section{Fine, But What Does That Mean For Us?}
+Alright, the linear algebra aside, what we are interested is:
+\begin{enumerate}
+	\item Usually $f$, the recurrent function, cannot have arbitrary arguments added, and we need to model this.
+	\item what about $g$, how do we model this?
+\end{enumerate}
+The first question is answered by a linear layer $\mathbf{L}_1$ transforming a concatenation between the decoder input $\mathbf{E}x_i$ and the context vector $c_i$ across features, netting a feature vector of length $n2$, resulting in a linear map
+$$
+\mathbf{L}_1:\RR^{2n}\mapsto\RR^{n}
+$$
+This result can then be inputted to our recurrent layer in the following way:
+$$
+s_i=f(y_{i-1}, s_{i-1}, c_i)=RNN(k(y_{i-1}, c_i), s_{i-1})
+$$
+$$
+k(y_{i-1}, c_i)=\text{ReLU}(\mathbf{L}_1\mathbf{E}(y_{i-1}\odot c_i^T))
+$$
+The reason why we transpose $c_i$ is that it returns to us as a row vector and we want it as a column vector. When implementing it can be beneficial to simply make the attention computation return a column vector.
+
+The $g$ function is, as noted in the main paper, then designed as a linear map $\mathbf{L}_2$ that maps the concatenation of $s_i$ and $c_i$ across features from the space $\RR^{2n}$ to $\RR^{n}$:
+$$
+\mathbf{L}_2:\RR^{2n}\mapsto\RR^{n}
+$$
+the output, according to the main paper (whatever it's called) then softmaxes this:
+$$
+o_i=g(y_{i-1},s_i,c_i)=\text{softmax}(\mathbf{L}_2(s_i\odot c_i))
+$$
+We then return $o_i$.
+
+
+
+
+
+
+
+\end{document}

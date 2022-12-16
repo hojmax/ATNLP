@@ -1,0 +1,8 @@
+SCAN
+wandb
+__pycache__
+saved_models
+.DS_Store
+.ipynb_checkpoints
+media
+plots
