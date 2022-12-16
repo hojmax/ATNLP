@@ -15,7 +15,7 @@ class Dataloader:
 
     def fit_transform(self, path):
         """Basic fit and transform function for the dataloader
-           gien a path to a dataset (a file of the appropriate format)
+           given a path to a dataset (a file of the appropriate format)
            this generates and returns a tuple of lists of tensors -
            one for X and one for y. This also trains the dataloader on
            how to transform the dataset.
