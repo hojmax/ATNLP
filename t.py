@@ -20,7 +20,7 @@ config = {
     'train_path': 'SCAN/simple_split/tasks_train_simple.txt',
     'test_path': 'SCAN/simple_split/tasks_test_simple.txt',
     'dataset': 'simple',
-    'batch_size': 1,
+    'batch_size': 64,
 }
 
 dataloader = Dataloader()
