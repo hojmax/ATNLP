@@ -1,7 +1,7 @@
 from transformers import pipeline, set_seed
 
 generator = pipeline(
-    'text2text-generation', model='google/flan-t5-xl', device="cuda:0")
+    'text2text-generation', model='google/flan-t5-xxl', device="cuda:0")
 set_seed(0)
 
 prompt = (
