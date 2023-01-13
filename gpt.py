@@ -15,7 +15,7 @@ IN: jump OUT: I_JUMP
 Translate this sentence to instructions that start with 'I_':
 IN: turn left after jump twice OUT:"""
 )
-output = generator(prompt, max_new_tokens=50, max_length=None)
+output = generator(prompt, max_new_tokens=50, max_length=None, num_return_sequences=10)
 
 for i, sequence in enumerate(output):
     print(i, sequence['generated_text'][len(prompt):].split("\n")[0])
