@@ -1,10 +1,12 @@
 from transformers import pipeline, set_seed
 
-generator = pipeline('text-generation', model='gpt2-xl', device="cuda:0")
+generator = pipeline(
+    'text2text-generation', model='google/flan-t5-xl', device="cuda:0")
 set_seed(0)
 
 prompt = (
-    """IN: run right twice and walk opposite right twice OUT: RTURN RUN RTURN RUN RTURN RTURN WALK RTURN RTURN WALK
+    """Given these examples:
+IN: run right twice and walk opposite right twice OUT: RTURN RUN RTURN RUN RTURN RTURN WALK RTURN RTURN WALK
 IN: look right twice after turn right OUT: RTURN RTURN LOOK RTURN LOOK
 IN: look twice and run opposite left OUT: LOOK LOOK LTURN LTURN RUN
 IN: walk around left thrice and walk right thrice OUT: LTURN WALK LTURN WALK LTURN WALK LTURN WALK LTURN WALK LTURN WALK LTURN WALK LTURN WALK LTURN WALK LTURN WALK LTURN WALK LTURN WALK RTURN WALK RTURN WALK RTURN WALK
@@ -12,7 +14,8 @@ IN: run left after turn opposite right twice OUT: RTURN RTURN RTURN RTURN LTURN 
 IN: look around left after turn opposite left twice OUT: LTURN LTURN LTURN LTURN LTURN LOOK LTURN LOOK LTURN LOOK LTURN LOOK
 IN: turn left after run twice OUT: RUN RUN LTURN
 IN: jump OUT: JUMP
-IN: turn left after jump twice OUT: """
+Translate the sentence:
+turn left after jump twice"""
 )
 
 output = generator(prompt, max_new_tokens=50,
@@ -21,4 +24,4 @@ output = generator(prompt, max_new_tokens=50,
 print(output)
 
 for i, sequence in enumerate(output):
-    print(i, sequence['generated_text'][len(prompt):].split("\n")[0])
+    print(f'{i}:', sequence['generated_text'][len(prompt):].split("\n")[0])
