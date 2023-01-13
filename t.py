@@ -10,12 +10,12 @@ os.environ['WANDB_NOTEBOOK_NAME'] = 'transformer.ipynb'
 wandb.login()
 
 config = {
-    'learning_rate': 0.01,
+    'learning_rate': 0.001,
     'dropout': 0.1,
     'hidden_size': 200,
     'num_encoder_layers': 2,
     'num_decoder_layers': 2,
-    'nhead': 2,
+    'nhead': 4,
     'epochs': 20,
     'train_path': 'SCAN/simple_split/tasks_train_simple.txt',
     'test_path': 'SCAN/simple_split/tasks_test_simple.txt',
@@ -89,7 +89,6 @@ def train_epoch(model, optimizer):
         # .T because dataloader is returning batch_first
         src = src.T.to(device)
         tgt = tgt.T.to(device)
-
         tgt_input = tgt[:-1, :]
 
         src_mask, tgt_mask, src_padding_mask, tgt_padding_mask = create_mask(
