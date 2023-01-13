@@ -14,8 +14,9 @@ IN: look around left after turn opposite left twice OUT: LTURN LTURN LTURN LTURN
 IN: turn left after run twice OUT: RUN RUN LTURN
 IN: jump OUT: JUMP
 Translate the following:
-turn left after jump twice"""
+IN: turn left after jump twice OUT: """
 )
+
 output = generator(prompt, max_new_tokens=50,
                    max_length=None)
 
