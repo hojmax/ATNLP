@@ -1,6 +1,6 @@
 from transformers import pipeline, set_seed
 
-generator = pipeline('text-generation', model='gpt2-xl', device="cuda:0")
+generator = pipeline('text2text-generation', model='t5-large', device="cuda:0")
 set_seed(0)
 
 prompt = (
@@ -37,6 +37,7 @@ IN: jump OUT: JUMP
 Translate the following:
 IN: turn left after jump twice OUT:"""
 )
+
 output = generator(prompt, max_new_tokens=50,
                    max_length=None, num_return_sequences=10)
 
