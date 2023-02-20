@@ -1,4 +1,4 @@
-# ATNLP: Paper Implementation
+# Advanced Topics in NLP Final Project
 
 ## 📝 Description
 This is my final project for the UCPH course [Advanced Topics in Natural Language Processing](https://kurser.ku.dk/course/NDAK19001U/2022-2023) (ATNLP). The project goal was two fold. The first part was a reproduction study of the paper *Generalization without Systematicity* by Lake and Baroni. The second part was free-form, where i chose to investigate in-context learning for experiment 3. My report can be found [here](https://github.com/hojmax/ATNLP/blob/main/Paper.pdf).
