@@ -5,11 +5,15 @@ This is my final project for the UCPH course [Advanced Topics in Natural Languag
 
 ## 🏄‍♂️ Usage
 
-You will need a [Weights & Biases](https://www.wandb.com/) account to log the experiments. You will be prompted to enter your API key when running the notebook. You should change the `wandb_project`and `wandb_entity` variables at the top of the notebook to match your account.
+You will need a [Weights & Biases](https://www.wandb.com/) account to log the experiments. You will be prompted to enter your API key when running the notebook. You should change the `wandb_project` and `wandb_entity` variables at the top of the notebook to match your account.
 
 ### Local
 
-For local use, simply run the `main.ipynb` notebook.
+The reproduction part can be executed by running the `main.ipynb` notebook. In order to execute the in-context learning  script you can run:
+```bash
+python in-context.py --model facebook/opt-350m --dataset random8.json --max-examples 1000
+```
+The model and dataset can be varied. See [the report](https://github.com/hojmax/ATNLP/blob/main/Paper.pdf) for more information on this. All the datasets are available in the `/prompts` folder. The script expects cuda to be available.
 
 ### Colab
 
@@ -20,7 +24,7 @@ When using colab, upload the `main.ipynb` notebook. Afterwards, add a cell to th
 %cd /content/ATNLP
 ```
 
-You can then run the notebook as usual.
+You can then run the notebook and the in-context script as described above.
 
 ## 📙 Resources
 
