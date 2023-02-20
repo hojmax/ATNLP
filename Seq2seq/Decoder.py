@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch
-from attention import Attention
-from Lang import Lang
+from Seq2seq.attention import Attention
+from Seq2seq.Lang import Lang
 
 
 class DecoderRNN(nn.Module):

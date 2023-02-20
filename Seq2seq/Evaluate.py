@@ -1,4 +1,4 @@
-from Lang import Lang
+from Seq2seq.Lang import Lang
 import numpy as np
 from scipy.spatial import distance
 import pandas as pd

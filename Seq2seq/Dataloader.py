@@ -1,4 +1,4 @@
-from Lang import Lang
+from Seq2seq.Lang import Lang
 import torch
 import os
 
