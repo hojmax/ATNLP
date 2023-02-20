@@ -1,11 +1,11 @@
 # ATNLP: Paper Implementation
 
 ## 📝 Description
-This is my final project for the UCPH course [Advanced Topics in Natural Language Processing](https://kurser.ku.dk/course/NDAK19001U/2022-2023). The project goal was two fold. The first part was a reproduction study of the paper *Generalization without Systematicity* by Lake and Baroni. The second part was free-form, where i chose to investigate in-context learning for experiment 3. My report can be found [here](https://github.com/hojmax/ATNLP/blob/main/Paper.pdf).
+This is my final project for the UCPH course [Advanced Topics in Natural Language Processing](https://kurser.ku.dk/course/NDAK19001U/2022-2023) (ATNLP). The project goal was two fold. The first part was a reproduction study of the paper *Generalization without Systematicity* by Lake and Baroni. The second part was free-form, where i chose to investigate in-context learning for experiment 3. My report can be found [here](https://github.com/hojmax/ATNLP/blob/main/Paper.pdf).
 
 ## 🏄‍♂️ Usage
 
-You will need a [Weights & Biases](https://www.wandb.com/) account to log the experiments. You will be prompted to enter your API key when running the notebook.
+You will need a [Weights & Biases](https://www.wandb.com/) account to log the experiments. You will be prompted to enter your API key when running the notebook. You should the `wandb_project`and `wandb_entity` variables at the top of the notebook to match your account.
 
 ### Local
 
