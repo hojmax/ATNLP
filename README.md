@@ -5,7 +5,7 @@ This is my final project for the UCPH course [Advanced Topics in Natural Languag
 
 ## 🏄‍♂️ Usage
 
-You will need a [Weights & Biases](https://www.wandb.com/) account to log the experiments. You will be prompted to enter your API key when running the notebook. You should the `wandb_project`and `wandb_entity` variables at the top of the notebook to match your account.
+You will need a [Weights & Biases](https://www.wandb.com/) account to log the experiments. You will be prompted to enter your API key when running the notebook. You should change the `wandb_project`and `wandb_entity` variables at the top of the notebook to match your account.
 
 ### Local
 
