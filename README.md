@@ -1,6 +1,11 @@
 # ATNLP: Paper Implementation
 
+## 📝 Description
+This is my final project for the UCPH course [Advanced Topics in Natural Language Processing](https://kurser.ku.dk/course/NDAK19001U/2022-2023). The project goal was two fold. The first part was a reproduction study of the paper *Generalization without Systematicity* by Lake and Baroni. The second part was free-form, where i chose to investigate in-context learning for experiment 3. My report can be found [here](https://github.com/hojmax/ATNLP/blob/main/Paper.pdf).
+
 ## 🏄‍♂️ Usage
+
+You will need a [Weights & Biases](https://www.wandb.com/) account to log the experiments. You will be prompted to enter your API key when running the notebook.
 
 ### Local
 
@@ -11,21 +16,11 @@ For local use, simply run the `main.ipynb` notebook.
 When using colab, upload the `main.ipynb` notebook. Afterwards, add a cell to the top of the notebook with the following content:
 
 ```python
-!git clone https://git_token@github.com/hojmax/Individual-ATNLP.git
-%cd /content/Individual-ATNLP
+!git clone https://github.com/hojmax/ATNLP.git
+%cd /content/ATNLP
 ```
 
-The `git_token` should be replaced by your personal access token, and is required since the repo is private. You can generate a token by going to:
-
-Settings -> Developer Settings -> Personal Access Tokens -> Tokens (classic)
-
-When you push to the repository, you need to run `!git pull` and restart the runtime for the changes to take effect.
-
-## 🏋️ Weights & Biases
-
-You can access [our W&B team here](https://wandb.ai/project-group-1).
-
-You will need an API key when connecting. This can be found in your settings.
+You can then run the notebook as usual.
 
 ## 📙 Resources
 
@@ -33,25 +28,4 @@ You will need an API key when connecting. This can be found in your settings.
 
 [SCAN Data](https://github.com/brendenlake/SCAN)
 
-[Pytorch Language Translation Tutorial](https://pytorch.org/tutorials/beginner/translation_transformer.html)
-
 [Pytorch Seq2seq Tutorial](http://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html)
-
-
-walk = WALK
-look = LOOK
-run = RUN
-jump = JUMP
-turn left = LTURN
-turn right = RTURN
-u left = LTURN u
-u right = RTURN u
-turn opposite left = LTURN LTURN turn opposite right = RTURN RTURN
-u opposite left = turn opposite left u
-u opposite right = turn opposite right u
-turn around left = LTURN LTURN LTURN LTURN
-turn around right = RTURN RTURN RTURN RTURN
-u around left = LTURN u LTURN u LTURN u LTURN u u around right = RTURN u RTURN u RTURN u RTURN u x twice = x x
-x thrice = x x x
-x1 and x2 = x1 x2
-x1 after x2 = x2 x1
