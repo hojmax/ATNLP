@@ -16,7 +16,7 @@ The reproduction part can be executed by running the `main.ipynb` notebook. In o
 ```bash
 python in-context.py --model facebook/opt-350m --dataset random8.json --max-examples 1000
 ```
-The model and dataset can be varied. See [the report](https://github.com/hojmax/ATNLP/blob/main/Paper.pdf) for more information on this. All the datasets are available in the `/prompts` folder. The script expects cuda to be available.
+The model and dataset can be varied. See [the report](https://github.com/hojmax/ATNLP/blob/main/Paper.pdf) for more information on this. All the datasets are available in the `/prompts` folder. The script expects a GPU to be available.
 
 ### Colab
 
